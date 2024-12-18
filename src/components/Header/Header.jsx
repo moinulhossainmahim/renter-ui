@@ -50,13 +50,7 @@ const Header = () => {
             <div onClick={handleAddPropertyClick}>Add Property</div>
             <AddPropertyModal opened={modalOpened} setOpened={setModalOpened} />
             {/* login button */}
-            {!isAuthenticated ? (
-              <button className="button" onClick={loginWithRedirect}>
-                Login
-              </button>
-            ) : (
-              <ProfileMenu user={user} logout={logout} />
-            )}
+            <NavLink to="/login">Login</NavLink>
           </div>
         </OutsideClickHandler>
 
