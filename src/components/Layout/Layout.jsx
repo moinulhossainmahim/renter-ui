@@ -9,7 +9,6 @@ import useFavourites from "../../hooks/useFavourites";
 import useBookings from "../../hooks/useBookings";*/
 
 const Layout = () => {
-
   /*useFavourites()
   useBookings()
 

@@ -1,26 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
 import { BiMenuAltRight } from "react-icons/bi";
 import { getMenuStyles } from "../../utils/common";
 import useHeaderColor from "../../hooks/useHeaderColor";
 import OutsideClickHandler from "react-outside-click-handler";
 import { Link, NavLink } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import ProfileMenu from "../ProfileMenu/ProfileMenu";
 import AddPropertyModal from "../AddPropertyModal/AddPropertyModal";
 import useAuthCheck from "../../hooks/useAuthCheck.jsx";
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    JSON.parse(localStorage.getItem("isLoggedInHomyz")) || false
+  );
+
   const [menuOpened, setMenuOpened] = useState(false);
   const headerColor = useHeaderColor();
-  const [modalOpened, setModalOpened] = useState(false);
-  const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
-  const { validateLogin } = useAuthCheck();
 
-  const handleAddPropertyClick = () => {
-    if (validateLogin()) {
-      setModalOpened(true);
-    }
+
+  console.log(isLoggedIn)
+  // const [modalOpened, setModalOpened] = useState(false);
+  // const { validateLogin } = useAuthCheck();
+
+  // const handleAddPropertyClick = () => {
+  //   const [isLoggedInHomyz, setIsLoggedInHomyz] = useState(false);
+
+  //   useEffect(() => {
+  //     const status = localStorage.getItem("isLoggedInHomyz") === true;
+  //   }, [status]);
+
+  //   if (validateLogin()) {
+  //     setModalOpened(true);
+  //   }
+  // };
+  useEffect(() => {
+    // Sync localStorage changes with state
+    const storedStatus = JSON.parse(localStorage.getItem("isLoggedInHomyz"));
+    setIsLoggedIn(storedStatus);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.setItem("isLoggedInHomyz", false);
+    setIsLoggedIn(false);
   };
 
   return (
@@ -44,13 +65,18 @@ const Header = () => {
           >
             <NavLink to="/properties">Properties</NavLink>
 
-            <a href="mailto:zainkeepscode@gmail.com">Contact</a>
+            <NavLink to="/contact">Contact</NavLink>
 
             {/* add property */}
-            <div onClick={handleAddPropertyClick}>Add Property</div>
-            <AddPropertyModal opened={modalOpened} setOpened={setModalOpened} />
+            {isLoggedIn && <NavLink to="/addProperty">Add Property</NavLink>}
+
             {/* login button */}
-            <NavLink to="/login">Login</NavLink>
+
+            {isLoggedIn ? (
+              <button onClick={handleLogout}>Logout</button>
+            ) : (
+              <NavLink to="/login">Login</NavLink>
+            )}
           </div>
         </OutsideClickHandler>
 

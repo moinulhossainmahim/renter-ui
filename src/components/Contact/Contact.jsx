@@ -45,7 +45,6 @@ const Contact = () => {
                 <div className="flexCenter button">Chat now</div>
               </div>
             </div>
-
             {/* second row */}
             <div className="flexStart row">
               <div className="flexColCenter mode">
