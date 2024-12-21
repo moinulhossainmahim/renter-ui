@@ -8,31 +8,18 @@ import { Link, NavLink } from "react-router-dom";
 import ProfileMenu from "../ProfileMenu/ProfileMenu";
 import AddPropertyModal from "../AddPropertyModal/AddPropertyModal";
 import useAuthCheck from "../../hooks/useAuthCheck.jsx";
+import { useDisclosure } from "@mantine/hooks";
+import { Modal } from "@mantine/core";
 
 const Header = () => {
+  const [opened, { open, close }] = useDisclosure(false);
   const [isLoggedIn, setIsLoggedIn] = useState(
     JSON.parse(localStorage.getItem("isLoggedInHomyz")) || false
   );
-
   const [menuOpened, setMenuOpened] = useState(false);
   const headerColor = useHeaderColor();
 
-
-  console.log(isLoggedIn)
-  // const [modalOpened, setModalOpened] = useState(false);
-  // const { validateLogin } = useAuthCheck();
-
-  // const handleAddPropertyClick = () => {
-  //   const [isLoggedInHomyz, setIsLoggedInHomyz] = useState(false);
-
-  //   useEffect(() => {
-  //     const status = localStorage.getItem("isLoggedInHomyz") === true;
-  //   }, [status]);
-
-  //   if (validateLogin()) {
-  //     setModalOpened(true);
-  //   }
-  // };
+  console.log(isLoggedIn);
   useEffect(() => {
     // Sync localStorage changes with state
     const storedStatus = JSON.parse(localStorage.getItem("isLoggedInHomyz"));
@@ -43,6 +30,10 @@ const Header = () => {
     localStorage.setItem("isLoggedInHomyz", false);
     setIsLoggedIn(false);
   };
+
+  const modalTitle = (
+    <p className="mx-auto text-xl font-semibold ">Homyz Add Property</p>
+  );
 
   return (
     <section className="h-wrapper" style={{ background: headerColor }}>
@@ -68,7 +59,7 @@ const Header = () => {
             <NavLink to="/contact">Contact</NavLink>
 
             {/* add property */}
-            {isLoggedIn && <NavLink to="/addProperty">Add Property</NavLink>}
+            {isLoggedIn && <NavLink onClick={open}>Add Property</NavLink>}
 
             {/* login button */}
 
@@ -78,6 +69,9 @@ const Header = () => {
               <NavLink to="/login">Login</NavLink>
             )}
           </div>
+          <Modal  size="xl" opened={opened} onClose={close} title={modalTitle} centered>
+            <AddPropertyModal opened={opened} onClose={close} />
+          </Modal>
         </OutsideClickHandler>
 
         {/* for medium and small screens */}

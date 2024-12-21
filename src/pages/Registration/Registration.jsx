@@ -25,7 +25,7 @@ const Registration = () => {
     }
   };
   return (
-    <div className="h-full bg-gray-400 dark:bg-gray-900">
+    <div className="h-full bg-gray-900">
       <div className="mx-auto h-[92vh]">
         <div className="flex justify-center px-6 py-12">
           <div className="flex w-full xl:w-3/4 lg:w-11/12">
@@ -55,7 +55,7 @@ const Registration = () => {
                       First Name
                     </label>
                     <input
-                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none dark:text-white focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="firstName"
                       type="text"
                       placeholder="First Name"
@@ -70,7 +70,7 @@ const Registration = () => {
                       Last Name
                     </label>
                     <input
-                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none dark:text-white focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="lastName"
                       type="text"
                       placeholder="Last Name"
@@ -86,7 +86,7 @@ const Registration = () => {
                     Email
                   </label>
                   <input
-                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none dark:text-white focus:outline-none focus:shadow-outline"
+                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="email"
                     type="email"
                     placeholder="Email"
