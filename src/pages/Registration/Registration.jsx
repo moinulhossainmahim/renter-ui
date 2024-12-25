@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import heroImage from "../../../public/hero-image.png";
+import heroImage from "../../assets/hero-image.png";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 const Registration = () => {

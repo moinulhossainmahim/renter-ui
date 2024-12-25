@@ -10,6 +10,7 @@ import AddPropertyModal from "../AddPropertyModal/AddPropertyModal";
 import useAuthCheck from "../../hooks/useAuthCheck.jsx";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
+import logo from "../../assets/logo.png";
 
 const Header = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -40,7 +41,7 @@ const Header = () => {
       <div className="flexCenter innerWidth paddings h-container">
         {/* logo */}
         <Link to="/">
-          <img src="./logo.png" alt="logo" width={100} />
+          <img src={logo} alt="logo" width={100} />
         </Link>
 
         {/* menu */}
@@ -64,12 +65,22 @@ const Header = () => {
             {/* login button */}
 
             {isLoggedIn ? (
-              <button onClick={handleLogout}>Logout</button>
+              <>
+                <NavLink to="/wishlist">Wishlist</NavLink>
+                <NavLink to="/profile">Profile</NavLink>
+                <button onClick={handleLogout}>Logout</button>
+              </>
             ) : (
               <NavLink to="/login">Login</NavLink>
             )}
           </div>
-          <Modal  size="xl" opened={opened} onClose={close} title={modalTitle} centered>
+          <Modal
+            size="xl"
+            opened={opened}
+            onClose={close}
+            title={modalTitle}
+            centered
+          >
             <AddPropertyModal opened={opened} onClose={close} />
           </Modal>
         </OutsideClickHandler>

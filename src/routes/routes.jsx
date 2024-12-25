@@ -6,6 +6,9 @@ import Home from "../pages/Home";
 import Login from "../pages/Login/Login";
 import Layout from "../components/Layout/Layout";
 import Contact from "../components/Contact/Contact";
+import PrivateRoute from "./PrivateRoute";
+import Profile from "../pages/Profile/Profile";
+import Wishlist from "../pages/Wishlist/Wishlist";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +34,22 @@ const router = createBrowserRouter([
       {
         path: "/properties",
         element: <Properties />,
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/wishlist",
+        element: (
+          <PrivateRoute>
+            <Wishlist />
+          </PrivateRoute>
+        ),
       },
     ],
   },
