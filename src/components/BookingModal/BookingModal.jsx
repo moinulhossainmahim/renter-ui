@@ -8,10 +8,10 @@ import { toast } from "react-toastify";
 import dayjs from "dayjs";
 const BookingModal = ({ opened, setOpened, email, propertyId }) => {
   const [value, setValue] = useState(null);
-  const {
-    userDetails: { token },
-    setUserDetails,
-  } = useContext(UserDetailContext);
+  // const {
+  //   userDetails: { token },
+  //   setUserDetails,
+  // } = useContext(UserDetailContext);
 
   const handleBookingSuccess = () => {
     toast.success("You have booked your visit", {

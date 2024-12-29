@@ -28,22 +28,22 @@ const Property = () => {
   const { validateLogin } = useAuthCheck();
   const { user } = useAuth0();
 
-  const {
-    userDetails: { token, bookings },
-    setUserDetails,
-  } = useContext(UserDetailContext);
+  // const {
+  //   userDetails: { token, bookings },
+  //   setUserDetails,
+  // } = useContext(UserDetailContext);
 
-  const { mutate: cancelBooking, isLoading: cancelling } = useMutation({
-    mutationFn: () => removeBooking(id, user?.email, token),
-    onSuccess: () => {
-      setUserDetails((prev) => ({
-        ...prev,
-        bookings: prev.bookings.filter((booking) => booking?.id !== id),
-      }));
+  // const { mutate: cancelBooking, isLoading: cancelling } = useMutation({
+  //   mutationFn: () => removeBooking(id, user?.email, token),
+  //   onSuccess: () => {
+  //     setUserDetails((prev) => ({
+  //       ...prev,
+  //       bookings: prev.bookings.filter((booking) => booking?.id !== id),
+  //     }));
 
-      toast.success("Booking cancelled", { position: "bottom-right" });
-    },
-  });
+  //     toast.success("Booking cancelled", { position: "bottom-right" });
+  //   },
+  // });
 
   if (isLoading) {
     return (
@@ -126,7 +126,7 @@ const Property = () => {
             </div>
 
             {/* booking button */}
-            {bookings?.map((booking) => booking.id).includes(id) ? (
+            {/* {bookings?.map((booking) => booking.id).includes(id) ? (
               <>
                 <Button
                   variant="outline"
@@ -142,7 +142,7 @@ const Property = () => {
                   {bookings?.filter((booking) => booking?.id === id)[0].date}
                 </span>
               </>
-            ) : (
+            ) : ( */}
               <button
                 className="button"
                 onClick={() => {
@@ -151,7 +151,7 @@ const Property = () => {
               >
                 Book your visit
               </button>
-            )}
+            {/* )} */}
 
             <BookingModal
               opened={modalOpened}

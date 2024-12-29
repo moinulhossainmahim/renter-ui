@@ -10,7 +10,7 @@ import AddPropertyModal from "../AddPropertyModal/AddPropertyModal";
 import useAuthCheck from "../../hooks/useAuthCheck.jsx";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/renter_logo.png";
 
 const Header = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -41,7 +41,7 @@ const Header = () => {
       <div className="flexCenter innerWidth paddings h-container">
         {/* logo */}
         <Link to="/">
-          <img src={logo} alt="logo" width={100} />
+          <img src={logo} alt="logo" className="object-cover w-36 h-28" />
         </Link>
 
         {/* menu */}

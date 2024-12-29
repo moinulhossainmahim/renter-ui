@@ -9,6 +9,7 @@ import Contact from "../components/Contact/Contact";
 import PrivateRoute from "./PrivateRoute";
 import Profile from "../pages/Profile/Profile";
 import Wishlist from "../pages/Wishlist/Wishlist";
+import Property from "../pages/Property/Property";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,23 @@ const router = createBrowserRouter([
       {
         path: "/properties",
         element: <Properties />,
+      },
+      {
+        path: "/properties/:id",
+        element: (
+          <PrivateRoute>
+            <Property />
+          </PrivateRoute>
+        ),
+        // loader: async ({ params }) => {
+        //   const response = await fetch(
+        //     `https://localhost:5173/properties/${params.id}`
+        //   );
+        //   if (!response.ok) {
+        //     throw new Response("Property not found", { status: 404 });
+        //   }
+        //   return response.json();
+        // },
       },
       {
         path: "/profile",
