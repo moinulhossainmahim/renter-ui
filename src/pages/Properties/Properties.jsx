@@ -50,7 +50,7 @@ const Properties = () => {
                 <PropertyCard key={property?.id} property={property} />
               ))}
             </div>
-            <Pagination total={properties?.total || 1} value={page} onChange={setPage} mt="sm" />
+            <Pagination total={Math.ceil(properties?.total/10) || 1} value={page} onChange={setPage} mt="sm" />
           </>
         ) : (
           <div className="flexCenter" style={{ height: "60vh" }}>
