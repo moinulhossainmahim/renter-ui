@@ -46,13 +46,13 @@ export const logout = async () => {
 };
 
 // Old api endpoints
-export const getAllProperties = async (search) => {
+export const getAllProperties = async (search, page = 1) => {
   try {
     const response = await api.get("/listing/list", {
-      params: { search },
+      params: { search, page },
       timeout: 10 * 1000,
       transformResponse: (res) => {
-        return JSON.parse(res).data.listings.data;
+        return JSON.parse(res).data.listings;
       }
     });
 
