@@ -1,37 +1,35 @@
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import "./Residencies.css";
 import { sliderSettings } from "../../utils/common";
 import PropertyCard from "../PropertyCard/PropertyCard";
-// import useProperties from "../../hooks/useProperties";
-// import {PuffLoader} from 'react-spinners'
-import { properties } from "./residencies.data";
+import useProperties from "../../hooks/useProperties";
+import {PuffLoader} from 'react-spinners'
 
 const Residencies = () => {
-  // const {data, isError, isLoading} = useProperties()
+  const { data: properties, isError, isLoading } = useProperties();
 
-  // if(isError){
-  //   return(
-  //     <div className='wrapper'>
-  //       <span>Error while fetching data</span>
-  //     </div>
-  //   )
-  // }
+  if(isError){
+    return(
+      <div className='wrapper'>
+        <span>Error while fetching data</span>
+      </div>
+    )
+  }
 
-  // if(isLoading){
-  //   return(
-  //     <div className="wrapper flexCenter" style={{height: "60vh"}}>
-  //       <PuffLoader
-  //       height="80"
-  //       width="80"
-  //       radius={1}
-  //       color="#4066ff"
-  //       aria-label="puff-loading"
-  //       />
-  //     </div>
-  //   )
-  // }
+  if(isLoading){
+    return(
+      <div className="wrapper flexCenter" style={{height: "60vh"}}>
+        <PuffLoader
+        height="80"
+        width="80"
+        radius={1}
+        color="#4066ff"
+        aria-label="puff-loading"
+        />
+      </div>
+    )
+  }
 
   return (
     <div id="residencies" className="r-wrapper">
@@ -43,9 +41,9 @@ const Residencies = () => {
         <Swiper {...sliderSettings}>
           <SlideNextButton />
           {/* slider */}
-          {properties.slice(0, 8).map((card, i) => (
+          {properties?.data?.slice(0, 8).map((card, i) => (
             <SwiperSlide key={i}>
-              <PropertyCard card={card}/>
+              <PropertyCard property={card}/>
             </SwiperSlide>
           ))}
         </Swiper>
