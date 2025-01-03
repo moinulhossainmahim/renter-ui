@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Pagination } from '@mantine/core';
 import SearchBar from "../../components/SearchBar/SearchBar";
 import "./Properties.css";
 import useProperties from "../../hooks/useProperties";
@@ -7,11 +8,13 @@ import PropertyCard from "../../components/PropertyCard/PropertyCard";
 
 const Properties = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [page, setPage] = useState(1);
 
-  const { data: properties, isError, isLoading } = useProperties(searchQuery);
+  const { data: properties, isError, isLoading } = useProperties(searchQuery, page);
 
   const handleSearch = (query) => {
     setSearchQuery(query);
+    setPage(1);
   };
 
   if (isError) {
@@ -40,12 +43,20 @@ const Properties = () => {
     <div className="wrapper">
       <div className="flexColCenter paddings innerWidth properties-container">
         <SearchBar onSearch={handleSearch} defaultValue={searchQuery} />
-
-        <div className="paddings flexCenter properties">
-          {properties?.map((property) => (
-            <PropertyCard key={property?.id} property={property} />
-          ))}
-        </div>
+        {(!isLoading && properties?.data?.length > 0) ? (
+          <>
+            <div className="paddings flexCenter properties">
+              {properties?.data?.map((property) => (
+                <PropertyCard key={property?.id} property={property} />
+              ))}
+            </div>
+            <Pagination total={properties?.total || 1} value={page} onChange={setPage} mt="sm" />
+          </>
+        ) : (
+          <div className="flexCenter" style={{ height: "60vh" }}>
+            <span>No properties found</span>
+          </div>
+        )}
       </div>
     </div>
   );
