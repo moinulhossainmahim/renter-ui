@@ -55,7 +55,7 @@ const Bookings = () => {
                   property.country.toLowerCase().includes(filter.toLowerCase())
               )
               .map((card, i) => (
-                <PropertyCard card={card} key={i} />
+                <PropertyCard property={card} key={i} />
               ))
           }
         </div>
