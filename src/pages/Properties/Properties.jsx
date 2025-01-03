@@ -1,14 +1,20 @@
 import { useState } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import "./Properties.css";
-// import useProperties from "../../hooks/useProperties";
-// import { PuffLoader } from "react-spinners";
+import useProperties from "../../hooks/useProperties";
+import { PuffLoader } from "react-spinners";
 import PropertyCard from "../../components/PropertyCard/PropertyCard";
-import { properties } from "../../components/Residencies/residencies.data";
+
 const Properties = () => {
-  // const { data, isError, isLoading } = useProperties();
-  const [filter, setFilter] = useState("");
-  /*if (isError) {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const { data: properties, isError, isLoading } = useProperties(searchQuery);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  if (isError) {
     return (
       <div className="wrapper">
         <span>Error while fetching data</span>
@@ -28,28 +34,17 @@ const Properties = () => {
         />
       </div>
     );
-  }*/
+  }
 
   return (
     <div className="wrapper">
       <div className="flexColCenter paddings innerWidth properties-container">
-        <SearchBar filter={filter} setFilter={setFilter} />
+        <SearchBar onSearch={handleSearch} defaultValue={searchQuery} />
 
         <div className="paddings flexCenter properties">
-          {
-            // data.map((card, i)=> (<PropertyCard card={card} key={i}/>))
-
-            properties
-              .filter(
-                (property) =>
-                  property.title.toLowerCase().includes(filter.toLowerCase()) ||
-                  property.city.toLowerCase().includes(filter.toLowerCase()) ||
-                  property.country.toLowerCase().includes(filter.toLowerCase())
-              )
-              .map((card, i) => (
-                <PropertyCard card={card} key={i} />
-              ))
-          }
+          {properties?.map((property) => (
+            <PropertyCard key={property?.id} property={property} />
+          ))}
         </div>
       </div>
     </div>

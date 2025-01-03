@@ -1,18 +1,26 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { HiLocationMarker } from "react-icons/hi";
 
-const SearchBar = ({ filter, setFilter }) => {
+const SearchBar = ({ onSearch, defaultValue }) => {
+  const { register, handleSubmit } = useForm({
+    defaultValues: { searchInput: defaultValue },
+  });
+
+  const onSubmit = (data) => {
+    onSearch(data.searchInput);
+  };
+
   return (
-    <div className="flexCenter search-bar">
+    <form className="flexCenter search-bar" onSubmit={handleSubmit(onSubmit)}>
       <HiLocationMarker color="var(--blue)" size={25} />
       <input
         placeholder="Search by title/city/country..."
         type="text"
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
+        {...register("searchInput")}
       />
-      <button className="button">Search</button>
-    </div>
+      <button className="button" type="submit">Search</button>
+    </form>
   );
 };
 

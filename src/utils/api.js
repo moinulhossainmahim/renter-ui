@@ -46,10 +46,14 @@ export const logout = async () => {
 };
 
 // Old api endpoints
-export const getAllProperties = async () => {
+export const getAllProperties = async (search) => {
   try {
-    const response = await api.get("/residency/allresd", {
+    const response = await api.get("/listing/list", {
+      params: { search },
       timeout: 10 * 1000,
+      transformResponse: (res) => {
+        return JSON.parse(res).data.listings.data;
+      }
     });
 
     if (response.status === 400 || response.status === 500) {
