@@ -6,6 +6,20 @@ export const api = axios.create({
   baseURL: "http://localhost:8000/api",
 });
 
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// New api endpoints
 export const login = async (email, password) => {
   try {
     const response = await api.post("/auth/login", { email, password }, {
@@ -22,6 +36,16 @@ export const login = async (email, password) => {
   }
 };
 
+export const logout = async () => {
+  try {
+    await api.delete("/auth/logout");
+  } catch (error) {
+    toast.error("Logout failed. Please try again.");
+    throw error;
+  }
+};
+
+// Old api endpoints
 export const getAllProperties = async () => {
   try {
     const response = await api.get("/residency/allresd", {
@@ -132,7 +156,7 @@ export const toFav = async (id, email, token) => {
 
 
 export const getAllFav = async (email, token) => {
-  if(!token) return 
+  if(!token) return
   try{
 
     const res = await api.post(
@@ -146,7 +170,6 @@ export const getAllFav = async (email, token) => {
         },
       }
     );
-      
     return res.data["favResidenciesID"]
 
   }catch(e)
@@ -154,12 +177,11 @@ export const getAllFav = async (email, token) => {
     toast.error("Something went wrong while fetching favs");
     throw e
   }
-} 
+}
 
 
 export const getAllBookings = async (email, token) => {
-  
-  if(!token) return 
+  if(!token) return
   try {
     const res = await api.post(
       `/user/allBookings`,
@@ -174,7 +196,6 @@ export const getAllBookings = async (email, token) => {
     );
     return res.data["bookedVisits"];
 
-    
   } catch (error) {
     toast.error("Something went wrong while fetching bookings");
     throw error

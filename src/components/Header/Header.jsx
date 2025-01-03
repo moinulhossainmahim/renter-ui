@@ -4,15 +4,16 @@ import { BiMenuAltRight } from "react-icons/bi";
 import { getMenuStyles } from "../../utils/common";
 import useHeaderColor from "../../hooks/useHeaderColor";
 import OutsideClickHandler from "react-outside-click-handler";
-import { Link, NavLink } from "react-router-dom";
-import ProfileMenu from "../ProfileMenu/ProfileMenu";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import AddPropertyModal from "../AddPropertyModal/AddPropertyModal";
-import useAuthCheck from "../../hooks/useAuthCheck.jsx";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
 import logo from "../../assets/renter_logo.png";
+import { logout } from "../../utils/api";
+import { toast } from "react-toastify";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [opened, { open, close }] = useDisclosure(false);
   const [isLoggedIn, setIsLoggedIn] = useState(
     JSON.parse(localStorage.getItem("isLoggedIn")) || false
@@ -20,20 +21,30 @@ const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const headerColor = useHeaderColor();
 
-  console.log(isLoggedIn);
   useEffect(() => {
     // Sync localStorage changes with state
     const storedStatus = JSON.parse(localStorage.getItem("isLoggedIn"));
     setIsLoggedIn(storedStatus);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.setItem("isLoggedIn", false);
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      setIsLoggedIn(false);
+      toast.success("Logout Successfully", {
+        position: "top-center",
+      });
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   const modalTitle = (
-    <p className="mx-auto text-xl font-semibold ">Homyz Add Property</p>
+    <p className="mx-auto text-xl font-semibold ">Renter Add Property</p>
   );
 
   return (
