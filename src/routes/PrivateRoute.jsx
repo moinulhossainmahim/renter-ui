@@ -1,10 +1,9 @@
 import { Navigate, useLocation } from "react-router";
 
 const PrivateRoute = ({ children }) => {
-  const user =   JSON.parse(localStorage.getItem("isLoggedInHomyz")) || false;
-  console.log(user)
+  const isLoggedIn =   JSON.parse(localStorage.getItem("isLoggedIn")) || false;
 
-  if (user) {
+  if (isLoggedIn) {
     return children;
   }
   return <Navigate to="/login" state={{ from: location }} replace></Navigate>;

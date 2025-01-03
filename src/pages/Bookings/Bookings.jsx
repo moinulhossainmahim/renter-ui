@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import useProperties from "../../hooks/useProperties";
+// import useProperties from "../../hooks/useProperties";
 import { PuffLoader } from "react-spinners";
 import PropertyCard from "../../components/PropertyCard/PropertyCard";
 import "../Properties/Properties.css";
 import UserDetailContext from "../../context/UserDetailContext";
 
 const Bookings = () => {
-  const { data, isError, isLoading } = useProperties();
+  // const { data, isError, isLoading } = useProperties();
   const [filter, setFilter] = useState("");
   const {
     userDetails: { bookings },

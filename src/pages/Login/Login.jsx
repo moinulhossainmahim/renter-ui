@@ -2,6 +2,8 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { login } from "../../utils/api"; // Import the login function
+
 const Login = () => {
   const navigate = useNavigate();
   const {
@@ -11,21 +13,31 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    const from = location.state?.from.pathname || "/";
+  const onSubmit = async (data) => {
     const { email, password } = data;
-    console.log(email, password);
-    if (email === "abdullahnoman4537@gmail.com" && password === "moinul") {
-      console.log("success");
-      localStorage.setItem("isLoggedInHomyz", true);
-      navigate(from, { replace: true });
-      toast("Login Successfully", {
+
+    try {
+      const response = await login(email, password);
+      localStorage.setItem("isLoggedIn", true);
+      console.log('response', response);
+      if (response?.data?.token?.access_token) {
+        localStorage.setItem(
+          'access_token',
+          response.data.token.access_token,
+        );
+        navigate('/');
+        toast.success("Login Successfully", {
+          position: "top-center",
+        });
+      }
+    } catch (error) {
+      const errorMessage = error.message || "Login failed. Please check your credentials.";
+      toast.error(errorMessage, {
         position: "top-center",
       });
-    } else {
-      console.log("not success");
     }
   };
+
   return (
     <div className="flex flex-col justify-center min-h-screen py-6 bg-gray-100 sm:py-12">
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
@@ -50,8 +62,7 @@ const Login = () => {
                     name="email"
                     type="text"
                     className="w-full h-10 text-gray-900 placeholder-transparent border-b-2 border-gray-300 peer focus:outline-none focus:borer-rose-600"
-                    placeholder="Email address"
-                    defaultValue="abdullahnoman4537@gmail.com"
+                    placeholder="Enter email address"
                     {...register("email", { required: true })}
                   />
                   <label
@@ -68,8 +79,7 @@ const Login = () => {
                     name="password"
                     type="password"
                     className="w-full h-10 text-gray-900 placeholder-transparent border-b-2 border-gray-300 peer focus:outline-none focus:borer-rose-600"
-                    placeholder="Password"
-                    defaultValue="moinul"
+                    placeholder="Enter password"
                     {...register("password", { required: true })}
                   />
                   <label

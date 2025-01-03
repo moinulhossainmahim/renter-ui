@@ -3,8 +3,24 @@ import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
 export const api = axios.create({
-  baseURL: "https://full-stack-real-estate-youtube.vercel.app/api",
+  baseURL: "http://localhost:8000/api",
 });
+
+export const login = async (email, password) => {
+  try {
+    const response = await api.post("/auth/login", { email, password }, {
+      timeout: 10 * 1000,
+    });
+
+    if (response.status === 400 || response.status === 500) {
+      throw response.data;
+    }
+    return response.data;
+  } catch (error) {
+    toast.error("Login failed. Please check your credentials.");
+    throw error;
+  }
+};
 
 export const getAllProperties = async () => {
   try {

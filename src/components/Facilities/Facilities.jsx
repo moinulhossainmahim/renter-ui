@@ -3,7 +3,7 @@ import { Box, Button, Group, NumberInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React, { useContext } from "react";
 import UserDetailContext from "../../context/UserDetailContext";
-import useProperties from "../../hooks/useProperties.jsx";
+// import useProperties from "../../hooks/useProperties.jsx";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 import { createResidency } from "../../utils/api";
@@ -42,10 +42,10 @@ const Facilities = ({
 
   // ==================== upload logic
   const { user } = useAuth0();
-  const {
-    userDetails: { token },
-  } = useContext(UserDetailContext);
-  const { refetch: refetchProperties } = useProperties();
+  // const {
+  //   userDetails: { token },
+  // } = useContext(UserDetailContext);
+  // const { refetch: refetchProperties } = useProperties();
 
   const {mutate, isLoading} = useMutation({
     mutationFn: ()=> createResidency({

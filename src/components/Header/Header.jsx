@@ -15,7 +15,7 @@ import logo from "../../assets/renter_logo.png";
 const Header = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [isLoggedIn, setIsLoggedIn] = useState(
-    JSON.parse(localStorage.getItem("isLoggedInHomyz")) || false
+    JSON.parse(localStorage.getItem("isLoggedIn")) || false
   );
   const [menuOpened, setMenuOpened] = useState(false);
   const headerColor = useHeaderColor();
@@ -23,12 +23,12 @@ const Header = () => {
   console.log(isLoggedIn);
   useEffect(() => {
     // Sync localStorage changes with state
-    const storedStatus = JSON.parse(localStorage.getItem("isLoggedInHomyz"));
+    const storedStatus = JSON.parse(localStorage.getItem("isLoggedIn"));
     setIsLoggedIn(storedStatus);
   }, []);
 
   const handleLogout = () => {
-    localStorage.setItem("isLoggedInHomyz", false);
+    localStorage.setItem("isLoggedIn", false);
     setIsLoggedIn(false);
   };
 
