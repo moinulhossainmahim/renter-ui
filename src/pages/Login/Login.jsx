@@ -34,8 +34,8 @@ const Login = () => {
           <div className="max-w-md mx-auto">
             <div>
               <h1 className="text-2xl font-semibold">
-                Login Your Homy
-                <span className="font-extrabold text-blue-600">Z</span>
+                Login to your account
+                <span className="font-extrabold text-blue-600"></span>
               </h1>
             </div>
             <form
