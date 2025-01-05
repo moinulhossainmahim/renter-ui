@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
 export const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: "https://fed6-103-144-201-98.ngrok-free.app/api",
 });
 
 api.interceptors.request.use(
@@ -22,9 +22,13 @@ api.interceptors.request.use(
 // New api endpoints
 export const login = async (email, password) => {
   try {
-    const response = await api.post("/auth/login", { email, password }, {
-      timeout: 10 * 1000,
-    });
+    const response = await api.post(
+      "/auth/login",
+      { email, password },
+      {
+        timeout: 10 * 1000,
+      }
+    );
 
     if (response.status === 400 || response.status === 500) {
       throw response.data;
@@ -32,6 +36,33 @@ export const login = async (email, password) => {
     return response.data;
   } catch (error) {
     toast.error("Login failed. Please check your credentials.");
+    throw error;
+  }
+};
+
+//createUser or registration
+export const createUser = async (
+  name,
+  email,
+  password,
+  password_confirmation
+) => {
+  try {
+    const response = await api.post(
+      `/auth/register`,
+      { name, email, password, password_confirmation }
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // }
+    );
+    if (response.status === 400 || response.status === 500) {
+      throw response.data;
+    }
+    return response.data;
+  } catch (error) {
+    toast.error("Something went wrong, Please try again");
     throw error;
   }
 };
@@ -53,7 +84,7 @@ export const getAllProperties = async (search, page = 1) => {
       timeout: 10 * 1000,
       transformResponse: (res) => {
         return JSON.parse(res).data.listings;
-      }
+      },
     });
 
     if (response.status === 400 || response.status === 500) {
@@ -78,23 +109,6 @@ export const getProperty = async (id) => {
     return response.data;
   } catch (error) {
     toast.error("Something went wrong");
-    throw error;
-  }
-};
-
-export const createUser = async (email, token) => {
-  try {
-    await api.post(
-      `/user/register`,
-      { email },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    toast.error("Something went wrong, Please try again");
     throw error;
   }
 };
@@ -158,11 +172,9 @@ export const toFav = async (id, email, token) => {
   }
 };
 
-
 export const getAllFav = async (email, token) => {
-  if(!token) return
-  try{
-
+  if (!token) return;
+  try {
     const res = await api.post(
       `/user/allFav`,
       {
@@ -174,18 +186,15 @@ export const getAllFav = async (email, token) => {
         },
       }
     );
-    return res.data["favResidenciesID"]
-
-  }catch(e)
-  {
+    return res.data["favResidenciesID"];
+  } catch (e) {
     toast.error("Something went wrong while fetching favs");
-    throw e
+    throw e;
   }
-}
-
+};
 
 export const getAllBookings = async (email, token) => {
-  if(!token) return
+  if (!token) return;
   try {
     const res = await api.post(
       `/user/allBookings`,
@@ -199,30 +208,27 @@ export const getAllBookings = async (email, token) => {
       }
     );
     return res.data["bookedVisits"];
-
   } catch (error) {
     toast.error("Something went wrong while fetching bookings");
-    throw error
+    throw error;
   }
-}
-
+};
 
 export const createResidency = async (data, token) => {
-  console.log(data)
-  try{
+  console.log(data);
+  try {
     const res = await api.post(
       `/residency/create`,
       {
-        data
+        data,
       },
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
-    )
-  }catch(error)
-  {
-    throw error
+    );
+  } catch (error) {
+    throw error;
   }
-}
+};

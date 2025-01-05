@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import heroImage from "../../assets/hero-image.png";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { createUser } from "../../utils/api";
 const Registration = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -11,18 +13,39 @@ const Registration = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    const { firstName, lastName, email, password, confirmPassword } =
+  const onSubmit = async (data) => {
+    const { firstName, lastName, email, password, password_confirmation } =
       data || {};
-    if (password === confirmPassword) {
-      toast("Your Account Is Created", {
+    const name = firstName + lastName;
+
+    try {
+      const response = await createUser(
+        name,
+        email,
+        password,
+        password_confirmation
+      );
+      navigate("/login");
+      toast.success(`${response?.message}`, {
         position: "top-center",
       });
-    } else {
-      toast("Password Did Not Match ", {
+    } catch (error) {
+      const errorMessage =
+        error.message || "Registration failed. Please check your credentials.";
+      toast.error(errorMessage, {
         position: "top-center",
       });
     }
+
+    // if (password === confirmPassword) {
+    //   toast("Your Account Is Created", {
+    //     position: "top-center",
+    //   });
+    // } else {
+    //   toast("Password Did Not Match ", {
+    //     position: "top-center",
+    //   });
+    // }
   };
   return (
     <div className="h-full bg-gray-900">
@@ -119,7 +142,7 @@ const Registration = () => {
                       className="w-full px-3 py-2 mb-3 text-sm leading-tight border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="c_password"
                       placeholder="******************"
-                      {...register("confirmPassword", { required: true })}
+                      {...register("password_confirmation", { required: true })}
                     />
                   </div>
                 </div>
