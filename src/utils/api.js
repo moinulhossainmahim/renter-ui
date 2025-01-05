@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
 export const api = axios.create({
-  baseURL: "https://fed6-103-144-201-98.ngrok-free.app/api",
+  baseURL: "http://localhost:8000/api",
 });
 
 api.interceptors.request.use(
@@ -99,8 +99,11 @@ export const getAllProperties = async (search, page = 1) => {
 
 export const getProperty = async (id) => {
   try {
-    const response = await api.get(`/residency/${id}`, {
+    const response = await api.get(`/listing/${id}/show`, {
       timeout: 10 * 1000,
+      transformResponse: (res) => {
+        return JSON.parse(res).data.listing;
+      },
     });
 
     if (response.status === 400 || response.status === 500) {

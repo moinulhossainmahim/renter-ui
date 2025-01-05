@@ -42,12 +42,8 @@ const router = createBrowserRouter([
         element: <Properties />,
       },
       {
-        path: "/properties/:id",
-        element: (
-          <PrivateRoute>
-            <Property />
-          </PrivateRoute>
-        ),
+        path: "/properties/:propertyId",
+        element: <Property />,
         // loader: async ({ params }) => {
         //   const response = await fetch(
         //     `https://localhost:5173/properties/${params.id}`
