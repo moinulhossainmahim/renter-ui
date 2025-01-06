@@ -29,7 +29,7 @@ const Login = () => {
           'refresh_token',
           response.data.token.refresh_token,
         );
-        navigate('/');
+        navigate('/properties');
         toast.success("Login Successfully", {
           position: "top-center",
         });

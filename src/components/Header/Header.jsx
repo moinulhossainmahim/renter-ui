@@ -21,11 +21,11 @@ const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const headerColor = useHeaderColor();
 
+  const access_token = localStorage.getItem('access_token');
+
   useEffect(() => {
-    // Sync localStorage changes with state
-    const storedStatus = JSON.parse(localStorage.getItem("isLoggedIn"));
-    setIsLoggedIn(storedStatus);
-  }, []);
+    setIsLoggedIn(JSON.parse(localStorage.getItem("isLoggedIn")))
+  }, [isLoggedIn, access_token]);
 
   const handleLogout = async () => {
     try {
