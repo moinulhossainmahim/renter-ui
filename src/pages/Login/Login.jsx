@@ -65,6 +65,7 @@ const Login = () => {
                     id="email"
                     name="email"
                     type="text"
+                    defaultValue={'moinul12@gmail.com'}
                     className="w-full h-10 text-gray-900 placeholder-transparent border-b-2 border-gray-300 peer focus:outline-none focus:borer-rose-600"
                     placeholder="Enter email address"
                     {...register("email", { required: true })}
@@ -82,6 +83,7 @@ const Login = () => {
                     id="password"
                     name="password"
                     type="password"
+                    defaultValue={'Moinul123@'}
                     className="w-full h-10 text-gray-900 placeholder-transparent border-b-2 border-gray-300 peer focus:outline-none focus:borer-rose-600"
                     placeholder="Enter password"
                     {...register("password", { required: true })}

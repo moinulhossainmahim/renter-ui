@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { FaCircleCheck } from "react-icons/fa6";
+import React, { useEffect, useState } from "react";
 import blankImage from "../../assets/blankImage.jpg";
 import ProfileEdit from "./ProfileEdit";
+import useProfile from "../../hooks/useProfile";
 const Profile = () => {
   const [imageSrc, setImageSrc] = useState(blankImage);
-  const user = {
-    name: "Abdullah Al Noman",
-    email: "abdullahnoman4537@gmail.com",
-    phoneNumber: "01884444559",
-  };
-
+  const { data, isError, isLoading, refetch } = useProfile();
+  //NOTE get the user from useProfile hook
+  const user = data?.data?.user;
+  console.log(user);
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {

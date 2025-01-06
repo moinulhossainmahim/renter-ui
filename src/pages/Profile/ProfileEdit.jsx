@@ -7,7 +7,7 @@ const ProfileEdit = ({ user }) => {
       <div className="flex items-center justify-between px-10 mt-10">
         <div>
           <p className="mb-1 font-semibold">Full Name</p>
-          <p className="text-sm text-gray-400">{user.name}</p>
+          <p className="text-sm text-gray-400">{user?.name}</p>
         </div>
         <div>
           <button className="px-3 py-2 bg-gray-900 rounded-sm hover:bg-gray-800">
@@ -19,7 +19,7 @@ const ProfileEdit = ({ user }) => {
       <div className="flex items-center justify-between px-10 mt-10">
         <div>
           <p className="mb-1 font-semibold">Email</p>
-          <p className="text-sm text-gray-400">{user.email}</p>
+          <p className="text-sm text-gray-400">{user?.email}</p>
         </div>
         <div>
           <button className="px-3 py-2 bg-gray-900 rounded-sm hover:bg-gray-800">
@@ -31,7 +31,7 @@ const ProfileEdit = ({ user }) => {
       <div className="flex items-center justify-between px-10 mt-10">
         <div>
           <p className="mb-1 font-semibold">Phone Number</p>
-          <p className="text-sm text-gray-400">{user.phoneNumber}</p>
+          <p className="text-sm text-gray-400">{user?.phoneNumber}</p>
         </div>
         <div>
           <button className="px-3 py-2 bg-gray-900 rounded-sm hover:bg-gray-800">

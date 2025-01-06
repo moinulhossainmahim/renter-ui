@@ -76,6 +76,23 @@ export const logout = async () => {
   }
 };
 
+//my Profile
+export const profileMe = async (token) => {
+  try {
+    const response = await api.post(`/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 400 || response.status === 500) {
+      throw response.data;
+    }
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Old api endpoints
 export const getAllProperties = async (search, page = 1) => {
   try {
