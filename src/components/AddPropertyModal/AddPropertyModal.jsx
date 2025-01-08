@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const AddPropertyModal = ({ opened, onClose }) => {
   const [images, setImages] = useState([]);
@@ -35,12 +36,20 @@ const AddPropertyModal = ({ opened, onClose }) => {
     const newImages = Array.from(files);
     setImages((prevImages) => [...prevImages, ...newImages]);
   };
+
+  const handleRemoveImage = (indexToRemove) => {
+    setImages((prevImages) =>
+      prevImages.filter((_, index) => index !== indexToRemove)
+    );
+  };
   const handleChange = (e) => {
     const options = Array.from(e.target.selectedOptions);
     const values = options.map((option) => option.value);
     const newValues = values.filter((val) => !value.includes(val));
     if (newValues.length > 0) {
       setValue([...value, ...newValues]);
+    } else {
+      toast.error("You can't select the same feature twice");
     }
   };
 
@@ -280,6 +289,13 @@ const AddPropertyModal = ({ opened, onClose }) => {
                         // alt={`Uploaded ${index + 1}`}
                         className="w-12 h-12 border rounded-lg"
                       />
+                      {/* Rounded X Button */}
+                      <button
+                        onClick={() => handleRemoveImage(index)}
+                        className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-white bg-red-500 rounded-full hover:bg-red-700"
+                      >
+                        &times;
+                      </button>
                     </div>
                   ))}
                 </div>
