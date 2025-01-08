@@ -36,9 +36,12 @@ const AddPropertyModal = ({ opened, onClose }) => {
     setImages((prevImages) => [...prevImages, ...newImages]);
   };
   const handleChange = (e) => {
-    const options = Array.from(e.target.selectedOptions); // Get selected options as an array
-    const values = options.map((option) => option.value); // Extract values from options
-    setValue([...value, values]);
+    const options = Array.from(e.target.selectedOptions);
+    const values = options.map((option) => option.value);
+    const newValues = values.filter((val) => !value.includes(val));
+    if (newValues.length > 0) {
+      setValue([...value, ...newValues]);
+    }
   };
 
   const onSubmit = (data) => {
@@ -50,7 +53,8 @@ const AddPropertyModal = ({ opened, onClose }) => {
     propertyDetails.features = value;
   };
 
-  console.log(propertyDetails);
+  // console.log(propertyDetails);
+  // console.log(value);
 
   return (
     <div opened={opened} closeOnClickOutside>
