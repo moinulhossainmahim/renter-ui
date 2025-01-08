@@ -3,10 +3,17 @@ import blankImage from "../../assets/blankImage.jpg";
 import ProfileEdit from "./ProfileEdit";
 import useProfile from "../../hooks/useProfile";
 const Profile = () => {
-  const [imageSrc, setImageSrc] = useState(blankImage);
+  const user = {
+    name: "Moinul Islam",
+    email: "moinul12@gmail.com",
+    phoneNumber: "01884444559",
+    image: "https://avatars.githubusercontent.com/u/68756661?v=4",
+  };
+
+  const [imageSrc, setImageSrc] = useState(user.image || blankImage);
   const { data, isError, isLoading, refetch } = useProfile();
   //NOTE get the user from useProfile hook
-  const user = data?.data?.user;
+  // const user = data?.data?.user;
   console.log(user);
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -31,14 +38,14 @@ const Profile = () => {
                 alt="Profile"
               />
               <div className="mt-4 text-center">
-                {imageSrc == blankImage && (
-                  <button
-                    onClick={triggerFileInput}
-                    className="px-3 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-                  >
-                    Upload Image
-                  </button>
-                )}
+                {/* {imageSrc == blankImage && ( */}
+                <button
+                  onClick={triggerFileInput}
+                  className="px-3 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                >
+                  Upload Image
+                </button>
+                {/* // )} */}
                 <input
                   id="fileInput"
                   type="file"
@@ -54,11 +61,6 @@ const Profile = () => {
               </p>
             </div>
           </div>
-          {/* <div className="bg-[#1C1917] p-5 mt-5 rounded-2xl">
-            <button className="bg-[#E11D48] px-4 py-2 w-full my-5 rounded-lg">
-              LogOut
-            </button>
-          </div> */}
         </div>
         <ProfileEdit user={user} />
       </div>
