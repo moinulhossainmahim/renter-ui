@@ -15,21 +15,18 @@ const AddPropertyModal = ({ opened, onClose }) => {
   } = useForm();
   const [propertyDetails, setPropertyDetails] = useState({
     title: "",
+    bedrooms: 0,
+    bathrooms: 0,
     description: "",
     price: 0,
     city: "",
     state: "",
-    streetAddress: "",
-    image: null,
-    latitude: "",
-    longitude: "",
+    postal_code:0,
+    street_address: "",
+    images: null,
+    latitude: 0,
+    longitude: 0,
     features: [],
-    // facilities: {
-    //   bedrooms: 0,
-    //   parkings: 0,
-    //   bathrooms: 0,
-    // },
-    email: "",
   });
 
   const handleImageUpdate = (files) => {
@@ -54,13 +51,23 @@ const AddPropertyModal = ({ opened, onClose }) => {
   };
 
   const onSubmit = (data) => {
+    const updatedData = {
+      ...data,
+      bathrooms: Number(data.bathrooms),
+      bedrooms: Number(data.bedrooms),
+      price: Number(data.price),
+      latitude: Number(data.latitude),
+      longitude: Number(data.longitude),
+      postal_code: Number(data.postal_code),
+    };
     setPropertyDetails((prevDetails) => ({
       ...prevDetails,
-      ...data,
+      ...updatedData,
     }));
-    propertyDetails.image = images;
+    propertyDetails.images = images;
     propertyDetails.features = value;
   };
+  console.log(propertyDetails);
 
   // console.log(propertyDetails);
   // console.log(value);
@@ -90,6 +97,22 @@ const AddPropertyModal = ({ opened, onClose }) => {
                 Title
               </label>
             </div>
+            {/* bedroom  */}
+            <div className="relative mb-2">
+              <input
+                autoComplete="off"
+                type="number"
+                className="w-full h-10 mb-2 text-gray-900 placeholder-transparent border-b-2 border-gray-200 peer focus:outline-none focus:borer-rose-600"
+                placeholder="Title"
+                {...register("bedrooms", { required: true })}
+              />
+              <label
+                htmlFor="bedrooms"
+                className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+              >
+                Bedroom
+              </label>
+            </div>
             {/* price */}
             <div className="relative mb-2">
               <input
@@ -106,17 +129,17 @@ const AddPropertyModal = ({ opened, onClose }) => {
                 Price
               </label>
             </div>
-            {/* streetAddress */}
+            {/* street_address */}
             <div className="relative mb-2">
               <input
                 autoComplete="off"
                 type="text"
                 className="w-full h-10 mb-2 text-gray-900 placeholder-transparent border-b-2 border-gray-200 peer focus:outline-none focus:borer-rose-600"
-                placeholder="Price"
-                {...register("streetAddress", { required: true })}
+                placeholder="Street Address"
+                {...register("street_address", { required: true })}
               />
               <label
-                htmlFor="streetAddress"
+                htmlFor="street_address"
                 className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
               >
                 Street Address
@@ -129,10 +152,10 @@ const AddPropertyModal = ({ opened, onClose }) => {
                 type="number"
                 className="w-full h-10 mb-2 text-gray-900 placeholder-transparent border-b-2 border-gray-200 peer focus:outline-none focus:borer-rose-600"
                 placeholder="Postal Code"
-                {...register("postalCode", { required: true })}
+                {...register("postal_code", { required: true })}
               />
               <label
-                htmlFor="postalCode"
+                htmlFor="postal_code"
                 className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
               >
                 Postal Code
@@ -142,7 +165,7 @@ const AddPropertyModal = ({ opened, onClose }) => {
             <div className="relative mb-2">
               <input
                 autoComplete="off"
-                type="text"
+                type="number"
                 className="w-full h-10 mb-2 text-gray-900 placeholder-transparent border-b-2 border-gray-200 peer focus:outline-none focus:borer-rose-600"
                 placeholder="latitude"
                 {...register("latitude", { required: true })}
@@ -205,13 +228,29 @@ const AddPropertyModal = ({ opened, onClose }) => {
                 Description
               </label>
             </div>
+            {/* bathrooms  */}
+            <div className="relative mb-2">
+              <input
+                autoComplete="off"
+                type="number"
+                className="w-full h-10 mb-2 text-gray-900 placeholder-transparent border-b-2 border-gray-200 peer focus:outline-none focus:borer-rose-600"
+                placeholder="Bathroom"
+                {...register("bathrooms", { required: true })}
+              />
+              <label
+                htmlFor="bathrooms"
+                className="absolute left-0 -top-3.5  text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+              >
+                Bathroom
+              </label>
+            </div>
             {/*city*/}
             <div className="relative mb-2">
               <input
                 autoComplete="off"
                 type="text"
                 className="w-full h-10 mb-2 text-gray-900 placeholder-transparent border-b-2 border-gray-200 peer focus:outline-none focus:borer-rose-600"
-                placeholder="Price"
+                placeholder="City"
                 {...register("city", { required: true })}
               />
               <label
@@ -227,7 +266,7 @@ const AddPropertyModal = ({ opened, onClose }) => {
                 autoComplete="off"
                 type="text"
                 className="w-full h-10 mb-2 text-gray-900 placeholder-transparent border-b-2 border-gray-200 peer focus:outline-none focus:borer-rose-600"
-                placeholder="Price"
+                placeholder="State"
                 {...register("state", { required: true })}
               />
               <label

@@ -5,7 +5,7 @@ const ProfileEdit = ({ user }) => {
   const [emailEdit, setEmailEdit] = useState(false);
   const [phoneNumberEdit, setPhoneNumberEdit] = useState(false);
 
-  console.log(nameEdit);
+  console.log(user);
   return (
     <div className="col-span-3">
       <p className="text-3xl font-semibold">Personal Info</p>
