@@ -6,7 +6,6 @@ import "./Property.css";
 
 import { FaShower } from "react-icons/fa";
 import { MdLocationPin, MdMeetingRoom } from "react-icons/md";
-import Map from "../../components/Map/Map";
 import Heart from "../../components/Heart/Heart";
 
 const Property = () => {
@@ -142,15 +141,6 @@ const Property = () => {
           </div>
 
           {/* right side */}
-          <div className="map">
-            <Map
-              address={property?.address}
-              city={property?.city}
-              country={property?.country}
-              lat={property?.latitude}
-              long={property?.longitude}
-            />
-          </div>
         </div>
       </div>
     </div>

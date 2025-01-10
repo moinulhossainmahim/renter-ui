@@ -1,33 +1,22 @@
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import useCreateProperty from "../../hooks/useCreateProperty";
+import { useNavigate } from 'react-router-dom';
 
 const AddPropertyModal = ({ opened, onClose }) => {
+  const navigate = useNavigate();
   const [images, setImages] = useState([]);
-  const [value, setValue] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
   const features = ["Balcony", "Elevator", "Kitchen", "Wifi", "Pool"];
+
+  const createProperty = useCreateProperty();
+
   const {
     register,
     handleSubmit,
     reset,
-    control,
-    formState: { errors },
   } = useForm();
-  const [propertyDetails, setPropertyDetails] = useState({
-    title: "",
-    bedrooms: 0,
-    bathrooms: 0,
-    description: "",
-    price: 0,
-    city: "",
-    state: "",
-    postal_code:0,
-    street_address: "",
-    images: null,
-    latitude: 0,
-    longitude: 0,
-    features: [],
-  });
 
   const handleImageUpdate = (files) => {
     const newImages = Array.from(files);
@@ -39,38 +28,47 @@ const AddPropertyModal = ({ opened, onClose }) => {
       prevImages.filter((_, index) => index !== indexToRemove)
     );
   };
+
   const handleChange = (e) => {
     const options = Array.from(e.target.selectedOptions);
     const values = options.map((option) => option.value);
-    const newValues = values.filter((val) => !value.includes(val));
+    const newValues = values.filter((val) => !selectedFeatures.includes(val));
+
     if (newValues.length > 0) {
-      setValue([...value, ...newValues]);
+      setSelectedFeatures((prev) => [...prev, ...newValues]);
     } else {
       toast.error("You can't select the same feature twice");
     }
   };
 
-  const onSubmit = (data) => {
-    const updatedData = {
-      ...data,
-      bathrooms: Number(data.bathrooms),
-      bedrooms: Number(data.bedrooms),
-      price: Number(data.price),
-      latitude: Number(data.latitude),
-      longitude: Number(data.longitude),
-      postal_code: Number(data.postal_code),
+  const onSubmit = async (formData) => {
+    const propertyData = {
+      ...formData,
+      bathrooms: Number(formData.bathrooms),
+      bedrooms: Number(formData.bedrooms),
+      price: Number(formData.price),
+      latitude: Number(formData.latitude),
+      longitude: Number(formData.longitude),
+      postal_code: Number(formData.postal_code),
+      images: images,
+      features: selectedFeatures,
     };
-    setPropertyDetails((prevDetails) => ({
-      ...prevDetails,
-      ...updatedData,
-    }));
-    propertyDetails.images = images;
-    propertyDetails.features = value;
-  };
-  console.log(propertyDetails);
 
-  // console.log(propertyDetails);
-  // console.log(value);
+    createProperty.mutate(propertyData, {
+      onSuccess: (response) => {
+        toast.success(response?.message);
+        reset();
+        setImages([]);
+        setSelectedFeatures([]);
+        onClose?.();
+        navigate('/properties');
+      },
+      onError: (error) => {
+        toast.error(response?.message);
+        console.error('Error creating property:', error);
+      },
+    });
+  };
 
   return (
     <div opened={opened} closeOnClickOutside>
@@ -198,11 +196,11 @@ const AddPropertyModal = ({ opened, onClose }) => {
                 ))}
               </select>
               {/* Display Selected Features */}
-              {value.length > 0 && (
+              {selectedFeatures.length > 0 && (
                 <div style={{ marginTop: "10px" }}>
                   <strong>Selected Features:</strong>
                   <ul>
-                    {value.map((feature) => (
+                    {selectedFeatures.map((feature) => (
                       <li key={feature}>{feature}</li>
                     ))}
                   </ul>
