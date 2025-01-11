@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Heart from "../Heart/Heart";
 const PropertyCard = ({property}) => {
   const navigate = useNavigate();
-
   return (
     <div className="flexColStart r-card"
     onClick={()=>navigate(`../properties/${property.id}`)}

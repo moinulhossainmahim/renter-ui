@@ -10,7 +10,6 @@ import PrivateRoute from "./PrivateRoute";
 import Profile from "../pages/Profile/Profile";
 import Wishlist from "../pages/Wishlist/Wishlist";
 import Property from "../pages/Property/Property";
-import Test from "../pages/Test/Test";
 
 const router = createBrowserRouter([
   {
@@ -24,10 +23,6 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
-      },
-      {
-        path:'/test',
-        element:<Test/>
       },
       {
         path: "/contact",
@@ -70,6 +65,10 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path:'/test',
+        element:<Property/>
+      }
     ],
   },
 ]);
