@@ -36,16 +36,6 @@ const Registration = () => {
         position: "top-center",
       });
     }
-
-    // if (password === confirmPassword) {
-    //   toast("Your Account Is Created", {
-    //     position: "top-center",
-    //   });
-    // } else {
-    //   toast("Password Did Not Match ", {
-    //     position: "top-center",
-    //   });
-    // }
   };
   return (
     <div className="h-full bg-gray-900">
@@ -60,7 +50,6 @@ const Registration = () => {
                 backgroundPosition: "center",
               }}
             ></div>
-            {/* <!-- Col --> */}
             <div className="w-full lg:w-7/12  bg-[#0b0a1a] p-5 rounded-lg lg:rounded-l-none">
               <h3 className="py-4 text-2xl font-semibold text-center text-gray-800 dark:text-white">
                 Create an Account!

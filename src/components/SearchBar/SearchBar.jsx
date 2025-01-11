@@ -6,11 +6,9 @@ const SearchBar = ({ onSearch, defaultValue }) => {
   const { register, handleSubmit } = useForm({
     defaultValues: { searchInput: defaultValue },
   });
-
   const onSubmit = (data) => {
     onSearch(data.searchInput);
   };
-
   return (
     <form className="flexCenter search-bar" onSubmit={handleSubmit(onSubmit)}>
       <HiLocationMarker color="var(--blue)" size={25} />

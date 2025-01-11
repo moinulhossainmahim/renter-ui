@@ -39,15 +39,6 @@ const router = createBrowserRouter([
       {
         path: "/properties/:propertyId",
         element: <Property />,
-        // loader: async ({ params }) => {
-        //   const response = await fetch(
-        //     `https://localhost:5173/properties/${params.id}`
-        //   );
-        //   if (!response.ok) {
-        //     throw new Response("Property not found", { status: 404 });
-        //   }
-        //   return response.json();
-        // },
       },
       {
         path: "/profile",

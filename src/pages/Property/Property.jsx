@@ -57,7 +57,6 @@ const Property = () => {
   if (!data?.data?.listing) {
     return <div>Loading...</div>; // or a loader
   }
-
   return (
     <div className="wrapper">
       <div className="flexColStart paddings innerWidth property-container">
@@ -65,10 +64,7 @@ const Property = () => {
         <div className="like">
           <Heart />
         </div>
-
-        {/* image */}
         {data?.data?.listing?.images?.length > 0 && <PropertySwipper images={data?.data?.listing?.images} />}
-
         <div className="flexCenter property-details">
           {/* left */}
           <div className="flexColStart left">
@@ -79,7 +75,6 @@ const Property = () => {
                 ৳ {data?.data?.listing?.price}
               </span>
             </div>
-
             {/* facilities */}
             <div className="flexStart facilities">
               {/* bathrooms */}
@@ -87,22 +82,17 @@ const Property = () => {
                 <FaShower size={20} color="#1F3E72" />
                 <span>{data?.data?.listing?.bathrooms} Bathrooms</span>
               </div>
-
               {/* rooms */}
               <div className="flexStart facility">
                 <MdMeetingRoom size={20} color="#1F3E72" />
                 <span>{data?.data?.listing?.bedrooms} Room/s</span>
               </div>
             </div>
-
             {/* description */}
-
             <span className="secondaryText" style={{ textAlign: "justify" }}>
               {data?.data?.listing?.description}
             </span>
-
             {/* address */}
-
             <div className="flexStart" style={{ gap: "1rem" }}>
               <MdLocationPin size={25} />
               <span className="secondaryText">
@@ -128,44 +118,7 @@ const Property = () => {
                 </h6>
               </div>
             </div>
-
-            {/* booking button */}
-            {/* {bookings?.map((booking) => booking.id).includes(id) ? (
-              <>
-                <Button
-                  variant="outline"
-                  w={"100%"}
-                  color="red"
-                  onClick={() => cancelBooking()}
-                  disabled={cancelling}
-                >
-                  <span>Cancel booking</span>
-                </Button>
-                <span>
-                  Your visit already booked for date{" "}
-                  {bookings?.filter((booking) => booking?.id === id)[0].date}
-                </span>
-              </>
-            ) : ( */}
-            {/* <button
-                className="button"
-                onClick={() => {
-                  validateLogin() && setModalOpened(true);
-                }}
-              >
-                Book your visit
-              </button> */}
-            {/* )} */}
-
-            {/* <BookingModal
-              opened={modalOpened}
-              setOpened={setModalOpened}
-              propertyId={id}
-              email={user?.email}
-            /> */}
           </div>
-
-          {/* right side */}
         </div>
       </div>
     </div>

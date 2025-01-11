@@ -7,7 +7,6 @@ import "../Properties/Properties.css";
 import UserDetailContext from "../../context/UserDetailContext";
 
 const Favourites = () => {
-  // const { data, isError, isLoading } = useProperties();
   const [filter, setFilter] = useState("");
   const {
     userDetails: { favourites },
@@ -41,8 +40,6 @@ const Favourites = () => {
 
         <div className="paddings flexCenter properties">
           {
-            // data.map((card, i)=> (<PropertyCard card={card} key={i}/>))
-
             data
               .filter((property) => favourites.includes(property.id))
 

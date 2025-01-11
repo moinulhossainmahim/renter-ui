@@ -10,8 +10,6 @@ const Wishlist = () => {
         <div className="flexColCenter paddings innerWidth properties-container">
           <div className="paddings flexCenter properties">
             {
-              // data.map((card, i)=> (<PropertyCard card={card} key={i}/>))
-
               properties
                 .filter(
                   (property) =>

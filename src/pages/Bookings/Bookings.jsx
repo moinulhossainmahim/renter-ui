@@ -7,7 +7,6 @@ import "../Properties/Properties.css";
 import UserDetailContext from "../../context/UserDetailContext";
 
 const Bookings = () => {
-  // const { data, isError, isLoading } = useProperties();
   const [filter, setFilter] = useState("");
   const {
     userDetails: { bookings },
@@ -20,7 +19,6 @@ const Bookings = () => {
       </div>
     );
   }
-
   if (isLoading) {
     return (
       <div className="wrapper flexCenter" style={{ height: "60vh" }}>
@@ -41,13 +39,10 @@ const Bookings = () => {
 
         <div className="paddings flexCenter properties">
           {
-            // data.map((card, i)=> (<PropertyCard card={card} key={i}/>))
-
             data
               .filter((property) =>
                 bookings.map((booking) => booking.id).includes(property.id)
               )
-
               .filter(
                 (property) =>
                   property.title.toLowerCase().includes(filter.toLowerCase()) ||
