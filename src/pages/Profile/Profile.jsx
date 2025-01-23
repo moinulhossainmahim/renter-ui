@@ -4,28 +4,47 @@ import ProfileEdit from "./ProfileEdit";
 import useProfile from "../../hooks/useProfile";
 const Profile = () => {
   const user = {
-    name: "Moinul Islam",
-    email: "moinul12@gmail.com",
-    phoneNumber: "01884444559",
-    image: "https://avatars.githubusercontent.com/u/68756661?v=4",
+    data: {
+      user: {
+        id: "01jj8kxe9anvxvbb819mbhm1ah",
+        name: "MoinulHossain",
+        email: "moinulhossainmahim@gmail.com",
+        phone_number: "01884444559",
+        profile_image: "https://avatars.githubusercontent.com/u/68756661?v=4",
+        email_verified_at: null,
+        created_at: "2025-01-23T03:39:54.000000Z",
+        updated_at: "2025-01-23T03:39:54.000000Z",
+      },
+    },
+    message: "Fetch auth user successful.",
   };
 
-  const [imageSrc, setImageSrc] = useState(user.image || blankImage);
+  const [imageSrc, setImageSrc] = useState(
+    user?.data?.user?.profile_image || blankImage
+  );
+  const [newImageAdded, setNewImageAdded] = useState(false);
   const { data, isError, isLoading, refetch } = useProfile();
+
   //NOTE get the user from useProfile hook
-  // const user = data?.data?.user;
-  console.log(user);
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const newImageURL = URL.createObjectURL(file); // Generate a temporary URL
       setImageSrc(newImageURL); // Update the image source
+      setNewImageAdded(true);
     }
   };
 
   const triggerFileInput = () => {
     document.getElementById("fileInput").click(); // Trigger file input click
   };
+
+  const updateImage = () => {
+    setNewImageAdded(false);
+    user.data.user.profile_image = imageSrc;
+    console.log(user);
+  };
+
   return (
     <div className="bg-[#0C0A09] text-white">
       <div className="grid w-4/6 grid-cols-4 gap-10 py-10 mx-auto">
@@ -38,14 +57,22 @@ const Profile = () => {
                 alt="Profile"
               />
               <div className="mt-4 text-center">
-                {/* {imageSrc == blankImage && ( */}
-                <button
-                  onClick={triggerFileInput}
-                  className="px-3 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-                >
-                  Upload Image
-                </button>
-                {/* // )} */}
+                {newImageAdded ? (
+                  <button
+                    onClick={updateImage}
+                    className="px-3 py-2 text-white bg-gray-500 rounded hover:bg-gray-600"
+                  >
+                    Update Image
+                  </button>
+                ) : (
+                  <button
+                    onClick={triggerFileInput}
+                    className="px-3 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                  >
+                    Upload Image
+                  </button>
+                )}
+
                 <input
                   id="fileInput"
                   type="file"
@@ -57,7 +84,7 @@ const Profile = () => {
             </div>
             <div>
               <p className="pt-3 text-xl font-semibold text-center whitespace-nowrap">
-                {user?.name}
+                {user?.data?.user?.name}
               </p>
             </div>
           </div>

@@ -5,7 +5,6 @@ const ProfileEdit = ({ user }) => {
   const [emailEdit, setEmailEdit] = useState(false);
   const [phoneNumberEdit, setPhoneNumberEdit] = useState(false);
 
-  console.log(user);
   return (
     <div className="col-span-3">
       <p className="text-3xl font-semibold">Personal Info</p>
@@ -15,15 +14,15 @@ const ProfileEdit = ({ user }) => {
           <p className="mb-1 font-semibold">Full Name</p>
           {nameEdit ? (
             <input
-              onChange={(e) => (user.name = e.target.value)}
-               className="px-2 py-1 bg-gray-900 rounded"
+              onChange={(e) => (user.data.user.name = e.target.value)}
+              className="px-2 py-1 bg-gray-900 rounded"
               type="text"
               name=""
-              defaultValue={user.name}
+              defaultValue={user.data.user.name}
               id=""
             />
           ) : (
-            <p className="text-sm text-gray-400">{user?.name}</p>
+            <p className="text-sm text-gray-400">{user?.data?.user?.name}</p>
           )}
         </div>
         <div>
@@ -51,15 +50,15 @@ const ProfileEdit = ({ user }) => {
           <p className="mb-1 font-semibold">Email</p>
           {emailEdit ? (
             <input
-              onChange={(e) => (user.email = e.target.value)}
-               className="px-2 py-1 bg-gray-900 rounded"
+              onChange={(e) => (user.data.user.email = e.target.value)}
+              className="px-2 py-1 bg-gray-900 rounded"
               type="email"
               name=""
-              defaultValue={user.email}
+              defaultValue={user.data.user.email}
               id=""
             />
           ) : (
-            <p className="text-sm text-gray-400">{user?.email}</p>
+            <p className="text-sm text-gray-400">{user?.data?.user?.email}</p>
           )}
         </div>
         <div>
@@ -87,15 +86,17 @@ const ProfileEdit = ({ user }) => {
           <p className="mb-1 font-semibold">Phone Number</p>
           {phoneNumberEdit ? (
             <input
-              onChange={(e) => (user.phoneNumber = e.target.value)}
+              onChange={(e) => (user.data.user.phone_number = e.target.value)}
               className="px-2 py-1 bg-gray-900 rounded"
               type="number"
               name=""
-              defaultValue={user.phoneNumber}
+              defaultValue={user.data.user.phone_number}
               id=""
             />
           ) : (
-            <p className="text-sm text-gray-400">{user?.phoneNumber}</p>
+            <p className="text-sm text-gray-400">
+              {user?.data?.user?.phone_number}
+            </p>
           )}
         </div>
         <div>

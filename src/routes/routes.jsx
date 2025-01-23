@@ -42,11 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: (
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        ),
+        element: <Profile />,
       },
       {
         path: "/wishlist",
@@ -57,9 +53,9 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path:'/test',
-        element:<Property/>
-      }
+        path: "/test",
+        element: <Property />,
+      },
     ],
   },
 ]);

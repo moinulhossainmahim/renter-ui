@@ -93,6 +93,23 @@ export const profileMe = async (token) => {
   }
 };
 
+//updateMyProfile
+export const updateProfile = async (token) => {
+  try {
+    const response = await api.put(`/auth/profile-update`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 400 || response.status === 500) {
+      throw response.data;
+    }
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Old api endpoints
 export const getAllProperties = async (search, page = 1) => {
   try {
@@ -116,7 +133,7 @@ export const getAllProperties = async (search, page = 1) => {
 
 // Create a new property
 export const createProperty = async (propertyDetails) => {
-  console.log('propertyDetails', propertyDetails);
+  console.log("propertyDetails", propertyDetails);
   const formData = new FormData();
 
   Object.entries(propertyDetails).forEach(([key, value]) => {
@@ -154,4 +171,3 @@ export const getProperty = async (id) => {
     throw error;
   }
 };
-
