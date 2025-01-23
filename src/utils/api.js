@@ -93,23 +93,6 @@ export const profileMe = async (token) => {
   }
 };
 
-//updateMyProfile
-export const updateProfile = async (token) => {
-  try {
-    const response = await api.put(`/auth/profile-update`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.status === 400 || response.status === 500) {
-      throw response.data;
-    }
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
 // Old api endpoints
 export const getAllProperties = async (search, page = 1) => {
   try {
@@ -149,6 +132,24 @@ export const createProperty = async (propertyDetails) => {
     return response.data;
   } catch (error) {
     toast.error("Something went wrong while creating the property");
+    throw error;
+  }
+};
+//updateMyProfile
+export const updateProfile = async (profileData) => {
+  const token = localStorage.getItem("access-token");
+  console.log({ profileData }, { token });
+  try {
+    const response = await api.put(`/auth/profile-update`, profileData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 400 || response.status === 500) {
+      throw response.data;
+    }
+    return response.data;
+  } catch (error) {
     throw error;
   }
 };

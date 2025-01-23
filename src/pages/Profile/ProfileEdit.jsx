@@ -1,9 +1,59 @@
 import React, { useState } from "react";
+import useUpdateProfile from "../../hooks/useUpdateProfile";
 
 const ProfileEdit = ({ user }) => {
   const [nameEdit, setNameEdit] = useState(false);
   const [emailEdit, setEmailEdit] = useState(false);
   const [phoneNumberEdit, setPhoneNumberEdit] = useState(false);
+
+  const update = useUpdateProfile();
+  const saveName = () => {
+    setNameEdit(false);
+    update.mutate(
+      { name: user?.data?.user?.name },
+      {
+        onSuccess: (response) => {
+          toast.success(response?.message);
+        },
+        onError: (error) => {
+          toast.error(response?.message);
+          console.error("Error Updating Profile Name", error);
+        },
+      }
+    );
+  };
+
+  const savePhoneNumber = () => {
+    setPhoneNumberEdit(false);
+    update.mutate(
+      { phone_number: user?.data?.user?.phone_number },
+      {
+        onSuccess: (response) => {
+          toast.success(response?.message);
+        },
+        onError: (error) => {
+          toast.error(response?.message);
+          console.error("Error Updating Profile Phone Number", error);
+        },
+      }
+    );
+  };
+
+  const saveEmail = () => {
+    setEmailEdit(false);
+    update.mutate(
+      { email: user?.data?.user?.email },
+      {
+        onSuccess: (response) => {
+          toast.success(response?.message);
+        },
+        onError: (error) => {
+          toast.error(response?.message);
+          console.error("Error Updating Profile Email", error);
+        },
+      }
+    );
+  };
 
   return (
     <div className="col-span-3">
@@ -28,7 +78,7 @@ const ProfileEdit = ({ user }) => {
         <div>
           {nameEdit ? (
             <button
-              onClick={() => setNameEdit(false)}
+              onClick={() => saveName()}
               className="px-3 py-2 bg-gray-900 rounded-sm hover:bg-gray-800"
             >
               Save
@@ -64,7 +114,7 @@ const ProfileEdit = ({ user }) => {
         <div>
           {emailEdit ? (
             <button
-              onClick={() => setEmailEdit(false)}
+              onClick={() => saveEmail()}
               className="px-3 py-2 bg-gray-900 rounded-sm hover:bg-gray-800"
             >
               Save
@@ -102,7 +152,7 @@ const ProfileEdit = ({ user }) => {
         <div>
           {phoneNumberEdit ? (
             <button
-              onClick={() => setPhoneNumberEdit(false)}
+              onClick={() => savePhoneNumber()}
               className="px-3 py-2 bg-gray-900 rounded-sm hover:bg-gray-800"
             >
               Save
