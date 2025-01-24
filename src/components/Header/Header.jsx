@@ -36,7 +36,7 @@ const Header = () => {
       setIsLoggedIn(false);
       toast.success("Logout Successfully", {
         position: "top-center",
-      });
+      }, { autoClose: 1000 });
       navigate("/login");
     } catch (error) {
       console.error("Logout failed", error);

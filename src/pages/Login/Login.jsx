@@ -31,7 +31,7 @@ const Login = () => {
         navigate('/properties');
         toast.success("Login Successfully", {
           position: "top-center",
-        });
+        }, { autoClose: 1000 });
       }
     } catch (error) {
       const errorMessage = error.message || "Login failed. Please check your credentials.";
