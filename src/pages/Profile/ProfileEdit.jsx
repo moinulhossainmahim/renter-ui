@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import useUpdateProfile from "../../hooks/useUpdateProfile";
 
 const ProfileEdit = ({ user }) => {
@@ -13,7 +14,7 @@ const ProfileEdit = ({ user }) => {
       { name: user?.data?.user?.name },
       {
         onSuccess: (response) => {
-          toast.success(response?.message);
+          toast.success(response?.message, { autoClose: 1000 });
         },
         onError: (error) => {
           toast.error(response?.message);
@@ -29,7 +30,7 @@ const ProfileEdit = ({ user }) => {
       { phone_number: user?.data?.user?.phone_number },
       {
         onSuccess: (response) => {
-          toast.success(response?.message);
+          toast.success(response?.message, { autoClose: 1000 });
         },
         onError: (error) => {
           toast.error(response?.message);
@@ -45,7 +46,7 @@ const ProfileEdit = ({ user }) => {
       { email: user?.data?.user?.email },
       {
         onSuccess: (response) => {
-          toast.success(response?.message);
+          toast.success(response?.message, { autoClose: 1000 });
         },
         onError: (error) => {
           toast.error(response?.message);

@@ -9,12 +9,15 @@ const PropertySwipper = ({ images }) => {
     <div className="w-full h-full">
       <Swiper
         autoplay={{ delay: 1000, disableOnInteraction: false }}
+        loop={true}
+        speed={600}
+        slidesPerView={1}
         pagination={{ clickable: true }}
         modules={[Pagination, Autoplay]}
         className="mySwiper"
         style={{ width: "100%", height: "500px" }}
       >
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <SwiperSlide key={index} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <img
               src={image}
