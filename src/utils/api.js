@@ -96,10 +96,10 @@ export const profileMe = async (token) => {
 };
 
 // Old api endpoints
-export const getAllProperties = async (search, page = 1) => {
+export const getAllProperties = async (search, page = 1, minPrice = 1, maxPrice = 100000) => {
   try {
     const response = await api.get("/listing/list", {
-      params: { search, page },
+      params: { search, page, min_price: minPrice, max_price: maxPrice },
       timeout: 10 * 1000,
       transformResponse: (res) => {
         return JSON.parse(res).data.listings;
