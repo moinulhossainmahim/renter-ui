@@ -1,5 +1,4 @@
 import axios from "axios";
-import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
 export const api = axios.create({
@@ -19,7 +18,7 @@ api.interceptors.request.use(
   }
 );
 
-// New api endpoints
+// Login
 export const login = async (email, password) => {
   try {
     const response = await api.post(
@@ -83,6 +82,9 @@ export const profileMe = async (token) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      transformResponse: (res) => {
+        return JSON.parse(res).data.user;
+      },
     });
     if (response.status === 400 || response.status === 500) {
       throw response.data;
@@ -135,10 +137,10 @@ export const createProperty = async (propertyDetails) => {
     throw error;
   }
 };
+
 //updateMyProfile
 export const updateProfile = async (profileData) => {
   const token = localStorage.getItem("access-token");
-  console.log({ profileData }, { token });
   try {
     const response = await api.put(`/auth/profile-update`, profileData, {
       headers: {
