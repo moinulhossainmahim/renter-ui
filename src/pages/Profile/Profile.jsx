@@ -1,30 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { PuffLoader } from "react-spinners";
+
 import blankImage from "../../assets/blankImage.jpg";
 import ProfileEdit from "./ProfileEdit";
 import useProfile from "../../hooks/useProfile";
 import useUpdateProfile from "../../hooks/useUpdateProfile";
+
 const Profile = () => {
-  const user = {
-    data: {
-      user: {
-        id: "01jj8kxe9anvxvbb819mbhm1ah",
-        name: "MoinulHossain",
-        email: "moinulhossainmahim@gmail.com",
-        phone_number: "01884444559",
-        profile_image: "https://avatars.githubusercontent.com/u/68756661?v=4",
-        email_verified_at: null,
-        created_at: "2025-01-23T03:39:54.000000Z",
-        updated_at: "2025-01-23T03:39:54.000000Z",
-      },
-    },
-    message: "Fetch auth user successful.",
-  };
+  const { data: user, isError, isLoading, refetch } = useProfile();
 
   const [imageSrc, setImageSrc] = useState(
     user?.data?.user?.profile_image || blankImage
   );
+
   const [newImageAdded, setNewImageAdded] = useState(false);
-  const { data, isError, isLoading, refetch } = useProfile();
+
+  useEffect(() => {
+    if (user?.data?.user?.profile_image) {
+      setImageSrc(user?.data?.user?.profile_image);
+    }
+  }, [user?.data?.user]);
 
   //NOTE get the user from useProfile hook
   const handleImageChange = (event) => {
@@ -46,7 +42,7 @@ const Profile = () => {
     setNewImageAdded(false);
     user.data.user.profile_image = imageSrc;
     updateImageUrl.mutate(
-      { profile_image: user?.data?.user?.profile_image },
+      { profile_image: user?.profile_image },
       {
         onSuccess: (response) => {
           toast.success(response?.message);
@@ -63,6 +59,24 @@ const Profile = () => {
     setNewImageAdded(false);
     setImageSrc(user?.data?.user?.profile_image);
   };
+
+  if (isLoading) {
+    return (
+      <div className="wrapper flexCenter" style={{ height: "60vh" }}>
+        <PuffLoader
+          height="80"
+          width="80"
+          radius={1}
+          color="#4066ff"
+          aria-label="puff-loading"
+        />
+      </div>
+    )
+  }
+
+  if (isError) {
+    return <div>Something went wrong</div>;
+  }
 
   return (
     <div className="bg-[#0C0A09] text-white">
@@ -114,7 +128,7 @@ const Profile = () => {
             </div>
             <div>
               <p className="pt-3 text-xl font-semibold text-center whitespace-nowrap">
-                {user?.data?.user?.name}
+                {user?.name}
               </p>
             </div>
           </div>
