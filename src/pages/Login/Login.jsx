@@ -19,7 +19,6 @@ const Login = () => {
     try {
       const response = await login(email, password);
       localStorage.setItem("isLoggedIn", true);
-      console.log('response', response);
       if (response?.data?.token?.access_token && response?.data?.token?.refresh_token) {
         localStorage.setItem(
           'access_token',
