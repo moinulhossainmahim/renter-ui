@@ -156,6 +156,7 @@ export const updateProfile = async (profileData) => {
   }
 };
 
+// Get a single property
 export const getProperty = async (id) => {
   try {
     const response = await api.get(`/listing/${id}/show`, {
@@ -170,7 +171,19 @@ export const getProperty = async (id) => {
     }
     return response.data;
   } catch (error) {
-    toast.error("Something went wrong");
+    // toast.error("Something went wrong");
+    // throw error;
+    console.log('error', error);
+  }
+};
+
+// Delete a property
+export const deleteProperty = async (id) => {
+  try {
+    const response = await api.delete(`/listing/${id}/delete`);
+    return response.data;
+  } catch (error) {
+    toast.error("Something went wrong while deleting the property");
     throw error;
   }
 };

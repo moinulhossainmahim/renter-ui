@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useQueryClient } from "react-query";
 import useCreateProperty from "../../hooks/useCreateProperty";
 import { useNavigate } from 'react-router-dom';
 
 const AddPropertyModal = ({ opened, onClose }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [images, setImages] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const features = ["Balcony", "Elevator", "Kitchen", "Wifi", "Pool"];
@@ -62,6 +64,7 @@ const AddPropertyModal = ({ opened, onClose }) => {
         setSelectedFeatures([]);
         onClose?.();
         navigate('/properties');
+        queryClient.invalidateQueries('allProperties');
       },
       onError: (error) => {
         toast.error(response?.message);

@@ -1,6 +1,7 @@
-import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
-import { getProperty } from "../../utils/api";
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getProperty, deleteProperty } from "../../utils/api";
 import { PuffLoader } from "react-spinners";
 import "./Property.css";
 
@@ -8,15 +9,41 @@ import { FaShower } from "react-icons/fa";
 import { MdLocationPin, MdMeetingRoom } from "react-icons/md";
 import Heart from "../../components/Heart/Heart";
 import PropertySwipper from "./PropertySwipper";
+import useProfile from "../../hooks/useProfile";
 
 const Property = () => {
   const { propertyId } = useParams();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const { data: user, isError: isProfileError, isLoading: isProfileLoading } = useProfile();
+
+  const mutation = useMutation(deleteProperty, {
+    onSuccess: (response) => {
+      toast.success(response.message);
+      queryClient.invalidateQueries(["property", propertyId]);
+      navigate('/properties');
+    },
+    onError: (error) => {
+      toast.error("Failed to delete property");
+      console.error('Error deleting property:', error);
+    },
+  });
 
   const { data: property, isLoading, isError } = useQuery(["property", propertyId], () =>
-    getProperty(propertyId)
+    getProperty(propertyId),
+    {
+      enabled: !!propertyId && !mutation.isSuccess,
+    }
   );
 
-  if (isLoading) {
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete this property?")) {
+      mutation.mutate(propertyId);
+    }
+  };
+
+  if (isLoading || isProfileLoading) {
     return (
       <div className="wrapper">
         <div className="flexCenter paddings">
@@ -26,7 +53,7 @@ const Property = () => {
     );
   }
 
-  if (isError) {
+  if (isError || isProfileError) {
     return (
       <div className="wrapper">
         <div className="flexCenter paddings">
@@ -53,6 +80,9 @@ const Property = () => {
               <span className="orangeText" style={{ fontSize: "1.5rem" }}>
                 ৳ {property?.price}
               </span>
+              {user?.data?.user?.id === property?.user?.id && (
+                <button className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600" onClick={handleDelete}>Delete this property</button>
+              )}
             </div>
             {/* facilities */}
             <div className="flexStart facilities">
@@ -84,7 +114,7 @@ const Property = () => {
               <div>
                 <h4 className="mb-2">Facilities</h4>
                 {property?.features?.map((feature) => (
-                  <h6 className="secondaryText">{feature} </h6>
+                  <h6 className="secondaryText" key={feature}>{feature} </h6>
                 ))}
               </div>
               <div className="mb-4">

@@ -8,7 +8,7 @@ import useProfile from "../../hooks/useProfile";
 import useUpdateProfile from "../../hooks/useUpdateProfile";
 
 const Profile = () => {
-  const { data: user, isError, isLoading, refetch } = useProfile();
+  const { data: user, isError, isLoading } = useProfile();
 
   const [imageSrc, setImageSrc] = useState(
     user?.data?.user?.profile_image || blankImage
