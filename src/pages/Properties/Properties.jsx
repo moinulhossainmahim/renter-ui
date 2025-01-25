@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pagination, Slider, RangeSlider } from "@mantine/core";
+import { Pagination, RangeSlider } from "@mantine/core";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import "./Properties.css";
 import useProperties from "../../hooks/useProperties";
@@ -56,7 +56,6 @@ const Properties = () => {
             onChange={handlePriceChange}
             min={1}
             max={100000}
-            step={1000}
             marks={[
               { value: 1, label: "1" },
               { value: 25000, label: "25k" },

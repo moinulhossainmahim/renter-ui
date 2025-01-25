@@ -77,7 +77,7 @@ const Header = () => {
 
             {isLoggedIn ? (
               <>
-                <NavLink to="/wishlist">Wishlist</NavLink>
+                {/* <NavLink to="/wishlist">Wishlist</NavLink> */}
                 <NavLink to="/profile">Profile</NavLink>
                 <button onClick={handleLogout}>Logout</button>
               </>
